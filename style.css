@@ -39,3 +39,8 @@ section {
     flex: 1;
     min-width: 150px;
 }
+responsive-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
