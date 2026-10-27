@@ -234,10 +234,11 @@ html {
     }
 }
 #lebensraum img.responsive-img {
-    display: block !important;
-    width: 95% !important;
-    max-width: 700px !important;
-    height: 350px !important;
-    object-fit: cover !important;
-    margin: 20px auto !important;
+    display: block;
+    width: 90%;
+    max-width: 400px;
+    height: 250px;
+    object-fit: cover;
+    margin: 20px auto;
+    border-radius: 18px;
 }
