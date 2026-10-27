@@ -39,8 +39,157 @@ section {
     flex: 1;
     min-width: 150px;
 }
-responsive-img {
+
+.responsive-img {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin: 20px auto;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease;
+}
+
+.responsive-img:hover {
+    transform: scale(1.03);
+}
+
+/* Auf Handys */
+@media (max-width: 600px) {
+    .responsive-img {
+        max-width: 100%;
+        height: 250px;
+    }
+}
+
+
+/* Sanftes Scrollen */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Elemente erscheinen beim Scrollen */
+.reveal {
+    opacity: 0;
+    transform: translateY(45px);
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Karten mit 3D-Effekt */
+.card {
+    position: relative;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.card:hover {
+    box-shadow: 0 18px 35px rgba(26, 91, 49, 0.22);
+}
+
+/* Bilder */
+.responsive-img {
     max-width: 100%;
     height: auto;
-    display: block;
+    border-radius: 18px;
+    transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.responsive-img:hover {
+    transform: scale(1.03);
+    filter: saturate(1.15);
+}
+
+/* Grüner Maus-Leuchteffekt */
+.mouse-glow {
+    position: fixed;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    background: radial-gradient(
+        circle,
+        rgba(100, 255, 130, 0.12) 0%,
+        rgba(100, 255, 130, 0.04) 40%,
+        transparent 70%
+    );
+    transform: translate(-50%, -50%);
+}
+
+/* Nach-oben-Button */
+.back-to-top {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    width: 52px;
+    height: 52px;
+    border: none;
+    border-radius: 50%;
+    background: #237a43;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+    transition: all 0.3s ease;
+    z-index: 10000;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: #155c30;
+    transform: translateY(-5px);
+}
+
+/* Auf Handys dezenter */
+@media (max-width: 600px) {
+    .mouse-glow {
+        display: none;
+    }
+
+    .card:hover {
+        box-shadow: none;
+    }
+}
+
+/* Animationen bei reduzierter Bewegung abschwächen */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .card,
+    .responsive-img,
+    .back-to-top {
+        transition: none;
+    }
+
+    .mouse-glow {
+        display: none;
+    }
 }
