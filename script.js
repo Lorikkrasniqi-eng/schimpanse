@@ -106,3 +106,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+const themeToggle = document.getElementById("theme-toggle");
+const body = document.body;
+
+// Gespeicherten Modus laden
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "dark") {
+    body.classList.add("dark-mode");
+    themeToggle.textContent = "☀️";
+    themeToggle.setAttribute("aria-label", "Lightmode aktivieren");
+}
+
+// Zwischen Darkmode und Lightmode wechseln
+themeToggle.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+
+    if (body.classList.contains("dark-mode")) {
+        themeToggle.textContent = "☀️";
+        themeToggle.setAttribute("aria-label", "Lightmode aktivieren");
+        localStorage.setItem("theme", "dark");
+    } else {
+        themeToggle.textContent = "🌙";
+        themeToggle.setAttribute("aria-label", "Darkmode aktivieren");
+        localStorage.setItem("theme", "light");
+    }
+});
