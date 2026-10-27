@@ -193,3 +193,13 @@ html {
         display: none;
     }
 }
+
+#aussehen img.responsive-img {
+    display: block;
+    width: 90%;
+    max-width: 400px;
+    height: 250px;
+    object-fit: cover;
+    margin: 20px auto;
+    border-radius: 15px;
+}
