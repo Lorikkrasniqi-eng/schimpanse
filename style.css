@@ -233,3 +233,11 @@ html {
         height: 280px;
     }
 }
+#lebensraum img.responsive-img {
+    display: block !important;
+    width: 95% !important;
+    max-width: 700px !important;
+    height: 350px !important;
+    object-fit: cover !important;
+    margin: 20px auto !important;
+}
