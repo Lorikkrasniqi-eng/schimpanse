@@ -227,7 +227,13 @@ html {
     .responsive-img {
         height: 250px;
     }
-    /* Darkmode-Button */
+
+    .mouse-glow {
+        display: none;
+    }
+}
+
+/* Darkmode-Button */
 #theme-toggle {
     background: transparent;
     border: 2px solid currentColor;
