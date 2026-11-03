@@ -175,41 +175,115 @@ chimpImage.addEventListener("click", function () {
         clickCount = 0;
     }
 });
+
+
+
+
 const skeletonImage = document.getElementById("skeleton-image");
 
 let skeletonClickCount = 0;
 
 skeletonImage.addEventListener("click", function () {
-
     skeletonClickCount++;
 
-    if (skeletonClickCount === 8) {
+    if (skeletonClickCount !== 8) return;
 
-        for (let i = 0; i < 100; i++) {
+    skeletonClickCount = 0;
 
-            const emoji = document.createElement("span");
+    const rect = skeletonImage.getBoundingClientRect();
+    const dots = [];
 
-            emoji.classList.add("monkey");
-            emoji.textContent = "💀";
+    // Jeder Buchstabe ist ein eigenes 5x7-Raster
+    const alphabet = {
+        L: ["#....", "#....", "#....", "#....", "#....", "#....", "#####"],
+        O: [".###.", "#...#", "#...#", "#...#", "#...#", "#...#", ".###."],
+        R: ["####.", "#...#", "#...#", "####.", "#.#..", "#..#.", "#...#"],
+        I: ["#####", "..#..", "..#..", "..#..", "..#..", "..#..", "#####"],
+        K: ["#...#", "#..#.", "#.#..", "##...", "#.#..", "#..#.", "#...#"]
+    };
 
-            const rect = skeletonImage.getBoundingClientRect();
+    const word = ["L", "O", "R", "I", "K"];
 
-            emoji.style.left = rect.left + rect.width / 2 + "px";
-            emoji.style.top = rect.top + rect.height / 2 + "px";
+    const spacing = 7;
+const letterGap = 5;
+const dotSize = 3;
 
-            const x = (Math.random() - 0.5) * 500;
-            const y = (Math.random() - 0.5) * 500;
+    const totalWidth = 5 * 5 * spacing + 4 * letterGap * spacing;
+    const startX = (window.innerWidth - totalWidth) / 2;
+    const startY = window.innerHeight / 2 - 10;
 
-            emoji.style.setProperty("--dx", x + "px");
-            emoji.style.setProperty("--dy", y + "px");
+    // Alle Zielpositionen vorbereiten
+    const positions = [];
 
-            document.body.appendChild(emoji);
+    let offset = 0;
 
-            emoji.addEventListener("animationend", function () {
-                emoji.remove();
+    word.forEach(letter => {
+        alphabet[letter].forEach((line, row) => {
+            line.split("").forEach((pixel, col) => {
+                if (pixel === "#") {
+                    positions.push({
+                        x: startX + offset + col * spacing,
+                        y: startY + row * spacing
+                    });
+                }
             });
-        }
+        });
 
-        skeletonClickCount = 0;
+        offset += (5 + letterGap) * spacing;
+    });
+
+    // 100 Punkte erzeugen
+    for (let i = 0; i < 100; i++) {
+        const dot = document.createElement("div");
+
+        dot.style.position = "fixed";
+        dot.style.width = dotSize + "px";
+        dot.style.height = dotSize + "px";
+        dot.style.borderRadius = "50%";
+        dot.style.background = "#000";
+        dot.style.zIndex = "99999";
+        dot.style.pointerEvents = "none";
+        dot.style.left = rect.left + rect.width / 2 + "px";
+        dot.style.top = rect.top + rect.height / 2 + "px";
+        dot.style.transition =
+            "left 1.5s ease, top 1.5s ease, opacity 1s ease";
+
+        document.body.appendChild(dot);
+        dots.push(dot);
     }
+
+    // Explosion
+    dots.forEach(dot => {
+        dot.style.left =
+            rect.left + rect.width / 2 +
+            (Math.random() - 0.5) * 500 + "px";
+
+        dot.style.top =
+            rect.top + rect.height / 2 +
+            (Math.random() - 0.5) * 400 + "px";
+    });
+
+    // Punkte formen den Namen LORIK
+    setTimeout(() => {
+        positions.forEach((pos, i) => {
+            if (dots[i]) {
+                dots[i].style.left = pos.x + "px";
+                dots[i].style.top = pos.y + "px";
+            }
+        });
+
+        // Überschüssige Punkte entfernen
+        dots.slice(positions.length).forEach(dot => {
+            dot.style.opacity = "0";
+        });
+
+        // Nach 3 Sekunden verschwinden
+        setTimeout(() => {
+            dots.forEach(dot => {
+                dot.style.opacity = "0";
+                setTimeout(() => dot.remove(), 1000);
+            });
+        }, 3000);
+
+    }, 1500);
 });
