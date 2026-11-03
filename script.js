@@ -143,7 +143,7 @@ chimpImage.addEventListener("click", function () {
     if (clickCount === 8) {
 
         // Explosion starten
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 100; i++) {
 
             const monkey = document.createElement("span");
 
@@ -173,5 +173,43 @@ chimpImage.addEventListener("click", function () {
 
         // Zähler zurücksetzen
         clickCount = 0;
+    }
+});
+const skeletonImage = document.getElementById("skeleton-image");
+
+let skeletonClickCount = 0;
+
+skeletonImage.addEventListener("click", function () {
+
+    skeletonClickCount++;
+
+    if (skeletonClickCount === 8) {
+
+        for (let i = 0; i < 100; i++) {
+
+            const emoji = document.createElement("span");
+
+            emoji.classList.add("monkey");
+            emoji.textContent = "💀";
+
+            const rect = skeletonImage.getBoundingClientRect();
+
+            emoji.style.left = rect.left + rect.width / 2 + "px";
+            emoji.style.top = rect.top + rect.height / 2 + "px";
+
+            const x = (Math.random() - 0.5) * 500;
+            const y = (Math.random() - 0.5) * 500;
+
+            emoji.style.setProperty("--dx", x + "px");
+            emoji.style.setProperty("--dy", y + "px");
+
+            document.body.appendChild(emoji);
+
+            emoji.addEventListener("animationend", function () {
+                emoji.remove();
+            });
+        }
+
+        skeletonClickCount = 0;
     }
 });
