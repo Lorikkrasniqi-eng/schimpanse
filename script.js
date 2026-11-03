@@ -132,3 +132,46 @@ themeToggle.addEventListener("click", () => {
         localStorage.setItem("theme", "light");
     }
 });
+const chimpImage = document.getElementById("chimp-image");
+
+let clickCount = 0;
+
+chimpImage.addEventListener("click", function () {
+
+    clickCount++;
+
+    if (clickCount === 8) {
+
+        // Explosion starten
+        for (let i = 0; i < 20; i++) {
+
+            const monkey = document.createElement("span");
+
+            monkey.classList.add("monkey");
+            monkey.textContent = "🐒";
+
+            // Position des Bildes ermitteln
+            const rect = chimpImage.getBoundingClientRect();
+
+            monkey.style.left = rect.left + rect.width / 2 + "px";
+            monkey.style.top = rect.top + rect.height / 2 + "px";
+
+            // Zufällige Flugrichtung
+            const x = (Math.random() - 0.5) * 500;
+            const y = (Math.random() - 0.5) * 500;
+
+            monkey.style.setProperty("--dx", x + "px");
+            monkey.style.setProperty("--dy", y + "px");
+
+            document.body.appendChild(monkey);
+
+            // Emoji wieder entfernen
+            monkey.addEventListener("animationend", function () {
+                monkey.remove();
+            });
+        }
+
+        // Zähler zurücksetzen
+        clickCount = 0;
+    }
+});
